@@ -1,0 +1,28 @@
+import "options.proto";
+
+package com.example;
+option java_package = "com.example";
+option java_outer_classname = "MyExample";
+
+message GetBalanceRequest {
+  optional bool include_all_accounts = 1;
+}
+
+message GetBalanceResponse {
+  message AccountBalance {
+    optional string name = 1;
+    optional double balance = 2;
+  }
+
+  optional double total_balance = 1;
+
+  // Map of account name -> balance.
+  repeated AccountBalance accounts = 2 [(dx_map_key)="name", (dx_map_val)="balance"];
+}
+
+service Bank {
+  rpc GetBalanceCall (GetBalanceRequest) returns (GetBalanceResponse) {
+    option (dx_method_options).path = "/user/:userId/get_balance";
+    option (dx_method_options).http_method = "POST";
+  }
+}

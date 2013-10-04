@@ -1,3 +1,7 @@
+options.pb.h
+options.pb.cc
+protoc-gen-jsonjava
+
 # Compiled Object files
 *.slo
 *.lo

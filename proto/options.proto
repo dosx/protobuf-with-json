@@ -1,0 +1,26 @@
+// Author: Walt Lin
+//
+// Custom protobuf options.
+
+import "google/protobuf/descriptor.proto";
+option java_package = "io.dosx";
+
+message DXMethodOptions {
+  // Path to the endpoint on the server; you may use variables like this:
+  // path="/user/:userId/resetPassword", and we will generate userId as an arg.
+  optional string path = 1;
+
+  // HTTP method- for example, GET, POST, etc.
+  optional string http_method = 2 [default="GET"];
+}
+
+extend google.protobuf.MethodOptions {
+  optional DXMethodOptions dx_method_options = 84000;
+}
+
+extend google.protobuf.FieldOptions {
+  // The field is actually a map; it must be a repeated message with two fields,
+  // and these are the names of those two fields, one for a key and one for val.
+  optional string dx_map_key = 84000;
+  optional string dx_map_val = 84001;
+}
